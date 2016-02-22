@@ -36,7 +36,6 @@ lockfile==0.8
 lxml==3.3.3
 nltk==3.0.5
 oauthlib==0.6.1
-oneconf==0.3.7
 pause==0.1.2
 pexpect==3.1
 pickleDB==0.4
