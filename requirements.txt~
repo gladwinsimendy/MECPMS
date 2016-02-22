@@ -19,7 +19,7 @@ colorama==0.2.5
 coursera==0.0.3
 cssselect==0.9.1
 decorator==4.0.4
-defer==1.0.6
+defer==1.0.4
 dirspec==13.10
 django-crispy-forms==1.5.2
 django-datatable==0.1.4
