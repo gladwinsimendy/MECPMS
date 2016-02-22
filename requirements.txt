@@ -7,9 +7,7 @@ PAM==0.1.4
 Pillow==2.3.0
 SQLAlchemy==1.0.8
 Scrapy==1.0.3
---allow-unverified Twisted-Conch
 Twisted==13.2.0
-Twisted-Conch==13.2.0
 Twisted-Core==13.2.0
 Twisted-Lore==13.2.0
 Twisted-Mail==13.2.0
