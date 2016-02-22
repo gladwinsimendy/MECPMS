@@ -16,7 +16,6 @@ characteristic==14.3.0
 chardet==2.3.0
 click==5.1
 colorama==0.2.5
-command-not-found==0.3
 coursera==0.0.3
 cssselect==0.9.1
 debtagshw==0.1
