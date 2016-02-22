@@ -19,7 +19,11 @@
       <script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
         
-
+<style>
+.success{
+  background:green;
+}
+</style>
 <!-- <div class = 'row'> -->
 <!-- <div class = "col-md-4">hai</div> -->
 <!-- <div class = 'col-md-4'></div>
@@ -44,6 +48,15 @@
     </div>
   </nav>
 
+ {% if messages %}
+<div class="row">
+<div class="col-xs-12">
+    {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
 
 <div class="row" style="margin-top : 130px;">
         <div class="col s12 m4 offset-m4">

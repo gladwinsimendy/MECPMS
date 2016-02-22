@@ -11,8 +11,10 @@ class PersonTable(tables.Table):
         attrs = {"class": "paleblue"}
 
 class NotifTable(tables.Table):
+	# actions = ProductActions(orderable=False)
 	class Meta:
 		model = notifications
+		fields = ('notification','timestamp',)
 		attrs = {"class": "paleblue"}
 
 class sellerTable(tables.Table):

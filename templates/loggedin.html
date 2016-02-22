@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% load render_table from django_tables2 %}
@@ -17,6 +18,13 @@
       <script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
 
+      <style>
+.success{
+  background:green;
+  text-align:center;
+}
+</style>
+
 {% if user.is_authenticated %}
 <nav>
     <div class="nav-wrapper red darken-2">
@@ -29,7 +37,19 @@
   </nav>
 
 {% if user.is_superuser %}
+
+      {% if messages %}
+<div class="row">
+<div class="col-xs-12">
+    {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+
         <br></br>
+
         <div class = 'row'>
         <div class = 'col-md-1'>
             </div>
@@ -55,20 +75,58 @@
 		<div class = 'row'>
             <div class = 'col-md-1'>
             </div>
-			<div class = 'col-md-6'>
+			<div class = 'col-md-4'>
 			<h3>Private Notifications</h3>
-				{% render_table table %}
+				<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Notification</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for t in table%}
+      <tr>
+        <td>{{ t.notification }}</td>
+        <td>{{ t.time_stamp }}</td>
+        </form>
+      </tr>
+      {%endfor%}
+      
+    </tbody>
+  </table>
 			</div>	
+      <div class = 'col-md-2'></div>
 			<!-- <div class = 'col-md-4'>
 			</div> -->
-			<div class = 'col-md-5'>
+			<div class = 'col-md-4'>
 			<h3>Public Notifications</h3>
-				{% render_table table1 %}
+				<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Notification</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for t in table1%}
+      <tr>
+        <td>{{ t.notification }}</td>
+        <td>{{ t.time_stamp }}</td>
+        </form>
+      </tr>
+      {%endfor%}
+      
+    </tbody>
+  </table>
 			</div>	
+      <div class = 'col-md-1'></div>
 			</div>
 
 
-</div>
+
 
 <div class = 'row'>
 <div class = 'col-md-1'>

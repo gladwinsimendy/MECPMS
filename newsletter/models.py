@@ -48,9 +48,19 @@ class student_details(models.Model):
 	#marks_obtained = models.IntegerField()
 
 class notifications(models.Model):
-	idno = models.IntegerField(null = True)
-	notification = models.CharField(max_length = 1000)
-	category= models.CharField(max_length = 50,default='private')
+    BATCH_CHOICES = (
+        ('CSA', 'CSA'),
+        ('CSB', 'CSB'),
+        ('ECA', 'ECA'),
+        ('ECB', 'ECB'),
+        ('EEE', 'EEE'),
+        ('BME', 'BME'),
+    )
+    idno = models.IntegerField(null = True)
+    notification = models.CharField(max_length = 1000)
+    batch = models.CharField(max_length = 200,choices = BATCH_CHOICES,blank = True , null = True)
+    category= models.CharField(max_length = 50,default='private')
+    time_stamp = models.DateTimeField(auto_now_add = True,auto_now = False)
 
 class adminregister(models.Model):
     BATCH_CHOICES = (

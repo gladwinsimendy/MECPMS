@@ -100,6 +100,25 @@
   </div>
 </div>
 
+
+<!-- <div class = 'row'>
+<! <div class = 'col-md-4'>
+</div> -->
+<!-- <div class = 'col-md-1'>
+</div>
+
+<form method = "POST">{% csrf_token%}
+<div class = 'col-md-7'>
+{{appform|crispy}}</div>
+<div class = 'col-md-3'>
+<button id="btnShow" type = "submit" value = "submit">Submit</button> 
+</div>
+</form>
+<div class = 'col-md-1'>
+</div>
+</div>
+ --> 
+
 <div class = 'row'>
 <!-- <div class = 'col-md-4'>
 </div> -->
@@ -107,6 +126,7 @@
 </div>
 <div class = 'col-md-10'>
 <form method = "POST">{% csrf_token%}
+{{appform|crispy}}
 {{form|crispy}}
 <button id="btnShow" type = "submit" value = "submit">Submit</button> 
 </form>

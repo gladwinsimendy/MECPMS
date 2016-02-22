@@ -17,12 +17,10 @@
 </div>
 <body>
 <div class = 'row'>
-<div class = 'col-md-1'>
-</div>
-<div class = 'col-md-10'>
+<div class = 'col-md-6'>
 <div class="container">
-  <h2>Group Details</h2>          
-  <table class="table table-hover">
+  <h2>Mini Poject Group Details</h2>          
+  <table class="table">
     <thead>
       <tr>
         <th>Name</th>
@@ -43,17 +41,37 @@
   </table>
 </div>
 </div>
-<div class = 'col-md-1'>
+<div class = 'col-md-6'>
+<div class="container">
+  <h2>Main Poject Group Details</h2>          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll no</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in s1%}
+      <tr>
+      
+        <td>{{l.name}}</td>
+        <td>{{l.rollno}}</td>
+        <td>{{l.email}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
 </div>
 </div>
 
 <div class = 'row'>
-<div class = 'col-md-1'>
-</div>
-<div class = 'col-md-10'>
+<div class = 'col-md-6'>
 <div class="container">
   <h2>Project Docs</h2>          
-  <table class="table table-hover">
+  <table class="table">
     <thead>
       <tr>
         <th>Document Title</th>
@@ -65,7 +83,7 @@
     {%for l in d%}
       <tr>
         <td>{{ l.doc_title }}</td>
-        <td><li><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></li></td>
+        <td><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></td>
         <td>{{ l.time_stamp }}</td>
       </tr>
       {%endfor%}
@@ -73,6 +91,30 @@
   </table>
 </div>
 </div>
-<div class = 'col-md-1'>
+
+<div class = 'col-md-6'>
+<div class="container">
+  <h2>Project Docs</h2>          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Document Title</th>
+        <th>Document Url</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in d1%}
+      <tr>
+        <td>{{ l.doc_title }}</td>
+        <td><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></td>
+        <td>{{ l.time_stamp }}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
 </div>
 </div>
+</div>
+</body>
+</html>

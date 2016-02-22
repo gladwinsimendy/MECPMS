@@ -1,16 +1,17 @@
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render
-from .forms import SignUpForm ,approvalForm, UserForm,searchForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
+from .forms import SignUpForm ,approvalForm, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
 from .models import sellerprofile,notifications,student_details,Document
 from django_tables2   import RequestConfig
 from django.forms import formset_factory
 from .tables  import PersonTable,NotifTable,sellerTable
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.contrib import messages
 
 
 # Create your views here.
@@ -47,7 +48,7 @@ def searchpage(request,num):
 		
     
 
-memberFormSet = formset_factory(memberProfileForm, extra=2)	
+
 # request.GET or None
 def contact(request):
     registered = False
@@ -92,8 +93,10 @@ def memberregister(request,num,num1):
             member = form.save(commit=False)
             member.group =  profile
             member.save()
+        messages.success(request, 'Profile details updated.')
         title = "Your Response Has been Recorded" 
-        return render(request,"logout.html",{'title':title})
+        return HttpResponseRedirect('/login/')
+        # return render(request,"memberregister.html",{'messages':messages})
     return render(request,"memberregister.html",context)       
 
 def search(request):
@@ -182,14 +185,11 @@ def loggout(request):
 	return HttpResponseRedirect('/')
 
 def notify(request,num):
-    
     details=[]
-    # table= PersonTable(sellerprofile.objects.filter(id=num))
-    # RequestConfig(request,paginate={"per_page": 25}).configure(table)
     form = NotificationForm(request.POST or None)
     appform = approvalForm(request.POST or None)
     p=sellerprofile.objects.get(id = num)
-    print p.approved
+    print p.seller.username
     d = Document.objects.filter(gpno = num)
     try:
      s = student_details.objects.filter(group=p)
@@ -202,39 +202,41 @@ def notify(request,num):
      s = None
     context={
         'form':form,
-        # 'appform':appform,
+        'appform':appform,
         'details':details,
         'documents':d
     }
-    # s=student_details.objects.get(group=p)
-    # print s.group
-    # if appform.is_valid():
-    # 	print 'hellooo'
-    # 	p.approved = 'YES'
-    # 	p.save()
-    # 	print p.approved
-
-    if form.is_valid() :
+    if form.is_valid() and appform.is_valid():
     	
     	# s=sellerprofile.objects.filter(id=num)
     	# print s
+        a = appform.cleaned_data.get("approved")
+        print a
     	instance = form.save(commit=False)
     	instance.idno = num
+        instance.batch = p.batch
     	instance.save()
+        # app = appform.save(commit=False)
+        p.approved = a
+        p.save()
+        # app.save()
     	form = NotificationForm()
+        messages.success(request, 'Notification successfully sent.')
+        return HttpResponseRedirect('../')
+        # appform = approvalForm()
     	context={
         'form':form,
+        'appform':appform,
         'details':details,
         'documents':d
-    }
+        }
     return render(request, "notify.html", context)
 
 def userpage(request,username):
     user=User.objects.get(username=username)
-    table= NotifTable(notifications.objects.filter(idno=user.sellerprofile.id))
-    RequestConfig(request,paginate={"per_page": 25}).configure(table)
-    table1= NotifTable(notifications.objects.filter(category='public'))
-    RequestConfig(request,paginate={"per_page": 25}).configure(table)
+    print user.sellerprofile.batch
+    table= notifications.objects.filter(idno=user.sellerprofile.id).only('notification','time_stamp')
+    table1 = notifications.objects.filter(Q(category='public')&Q(batch = user.sellerprofile.batch)).only('notification','time_stamp')
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
 
@@ -275,7 +277,10 @@ def adminpage(request,username):
         print 'hai'
         instance = notform.save(commit=False)
         instance.category='public'
+        instance.batch = batch
         instance.save()
+        notform = NotificationForm()
+        messages.success(request, 'Notification successfully sent.')
         return render(request, "loggedin.html", {'table': table,'form':notform})
 
     return render(request, "loggedin.html", {'table': table,'form':notform})
@@ -307,16 +312,23 @@ def pcview(request):
     if form.is_valid():
         s_class = form.cleaned_data.get("batch")
         p_type = form.cleaned_data.get("p_type")
+        print p_type
         rollno = form.cleaned_data.get("roll_no")
-        p=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type))
-        for each in p:
-        	s = student_details.objects.filter(Q(group=each)&Q(rollno = rollno))
-        	if s is not None:
-		        for e in s:
-		        	print 
-		       		d = Document.objects.filter(gpno = e.group.id)
-		       		s = student_details.objects.filter(group=e.group.id)
-		       		return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
+        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI'))
+        main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
+        for each in mini:
+            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+            for e in s:
+                d = Document.objects.filter(gpno = e.group.id)
+                s = student_details.objects.filter(group=e.group.id)
+                return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
+
+        for each in main:
+            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+            for e in s:
+                d1 = Document.objects.filter(gpno = e.group.id)
+                s1 = student_details.objects.filter(group=e.group.id)
+                return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
         	# else:
         	# 	return render(request,"error.html",{'title':'Not a valid combination'})
 
