@@ -18,7 +18,6 @@ click==5.1
 colorama==0.2.5
 coursera==0.0.3
 cssselect==0.9.1
-debtagshw==0.1
 decorator==4.0.4
 defer==1.0.6
 dirspec==13.10
