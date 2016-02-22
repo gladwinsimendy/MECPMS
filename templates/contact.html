@@ -1,0 +1,70 @@
+{% extends "basesignup.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block jumbotron %}
+<html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css'%}" media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body style= "background : #eeeeee">
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
+	
+	<nav>
+    <div class="nav-wrapper red darken-2">
+      &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">SignUp</font></a>
+      <style type="text/css">#abc:hover{text-decoration: none}</style>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/" style="text-decoration:none"><font size="4">Home</font></a></li>
+        <li><a href="/login" style="text-decoration:none"><font size="4">Login</font></a></li>
+      </ul>
+    </div>
+  </nav> 
+
+<script>
+function getLinkToFile() {
+  var e = document.getElementsByName('GetLink_textField')[0];
+  var val = parseInt(e.value);
+  alert(val)
+  // Do the rest here
+}
+</script>
+
+
+<div class="row" style="margin-top : 30px;">
+<div class = 'row'>
+<!-- <div class = "col-md-4">hai</div> -->
+<div class = 'col-md-4'></div>
+
+<div class = 'col-md-4'>
+<form method = "POST">
+{% csrf_token%}
+{{profileform|crispy}}
+<br></br>
+<div class="input-field row">
+             <input id="member no" name = "no_of_members" type="text" class="validate" style="font-size:15px">
+             <label for="member no"><font size="2">No of Members</font></label>
+             </div>
+<!-- <INPUT TYPE="text" NAME="no_of_members"> -->
+{{userform|crispy}}
+<div align="center">
+<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i></button>
+</div>
+</form>
+<br></br>
+<!-- <input type = "submit" value = "submit"> -->
+
+</div>
+</div>
+</body>
+</html>
+<!-- {% endblock %} -->

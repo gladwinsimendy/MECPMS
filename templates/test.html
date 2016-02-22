@@ -1,0 +1,19 @@
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% load render_table from django_tables2 %}
+<html>
+    <head>
+        <script src="{% static "js/bootstrap.dataTables.js" %}"></script>
+        <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+    </head>
+    <body>
+        {% if not form %}
+        {% render_table table %}
+        {% endif %}
+        {% if form %}
+        <form method = "POST">{% csrf_token%}
+		{{form|crispy}}
+		<input type = "submit" value = "submit">
+        {% endif %}
+    </body>
+</html>

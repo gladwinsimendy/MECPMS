@@ -1,0 +1,78 @@
+{% load staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/maxcdnbootstrap.min.css' %}">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="{% static 'js/maxcdnbootstrap.min.js' %}"></script>
+</head>
+<div class = 'row'>
+<div class = 'col-md-1'></div>
+<div class = 'col-md-10'>
+<h2>Project Title : {{title}}</h2></div>
+<div class = 'col-md-1'></div>
+</div>
+<body>
+<div class = 'row'>
+<div class = 'col-md-1'>
+</div>
+<div class = 'col-md-10'>
+<div class="container">
+  <h2>Group Details</h2>          
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll no</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in s%}
+      <tr>
+      
+        <td>{{l.name}}</td>
+        <td>{{l.rollno}}</td>
+        <td>{{l.email}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+</div>
+<div class = 'col-md-1'>
+</div>
+</div>
+
+<div class = 'row'>
+<div class = 'col-md-1'>
+</div>
+<div class = 'col-md-10'>
+<div class="container">
+  <h2>Project Docs</h2>          
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Document Title</th>
+        <th>Document Url</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in d%}
+      <tr>
+        <td>{{ l.doc_title }}</td>
+        <td><li><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></li></td>
+        <td>{{ l.time_stamp }}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+</div>
+<div class = 'col-md-1'>
+</div>
+</div>

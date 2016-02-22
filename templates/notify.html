@@ -1,0 +1,130 @@
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+<html>
+<head>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css'%}" media="screen,projection"/>
+<link rel="stylesheet" href="{% static 'css/maxcdnbootstrap.min.css' %}">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="{% static 'js/maxcdnbootstrap.min.js' %}"></script>
+<!-- 
+<script>
+   $(document).ready(function(){
+    $('button').click(function(){
+        $('.alert').show()
+    }) 
+});
+</script> -->
+</head>
+<body style= "background : #eeeeee; overflow-x : hidden">
+<script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
+<nav>
+    <div class="nav-wrapper red darken-2">
+      &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">User Actions</font></a>
+      <style type="text/css">#abc:hover{text-decoration: none}</style>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/login/admin/{{ request.user }}" style="text-decoration:none"><font size="4">Go Back</font></a></li>
+      </ul>
+    </div>
+  </nav>
+<style media="screen" type="text/css">
+.alert{
+  display:none;
+}
+</style>
+<div class = 'row'>
+<div class = 'col-md-1'>
+</div>
+<div class = 'col-md-10'>
+<div class="container">
+  <h2>Group Details</h2>          
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll no</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in details%}
+      <tr>
+      
+        <td>{{l.0}}</td>
+        <td>{{l.1}}</td>
+        <td>{{l.2}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+</div>
+<div class = 'col-md-1'>
+</div>
+</div>
+
+<div class = 'row'>
+<div class = 'col-md-1'>
+</div>
+<div class = 'col-md-10'>
+
+{% if documents %} 
+  <h2>Document Uploads</h2>    
+       
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Document Title</th>
+        <th>Document Url</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for document in documents%}
+      <tr>
+        <td>{{ document.doc_title }}</td>
+        <td><li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li></td>
+        <td>{{ document.time_stamp }}</td>
+      </tr>
+      {%endfor%}
+      
+    </tbody>
+  </table>
+  {% endif %}
+  </div>
+</div>
+
+<div class = 'row'>
+<!-- <div class = 'col-md-4'>
+</div> -->
+<div class = 'col-md-1'>
+</div>
+<div class = 'col-md-10'>
+<form method = "POST">{% csrf_token%}
+{{form|crispy}}
+<button id="btnShow" type = "submit" value = "submit">Submit</button> 
+</form>
+</div>
+<div class = 'col-md-1'>
+</div>
+</div>
+
+
+<!-- <div class="container">
+        
+        <div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&\times;</button>
+            Success! message sent successfully.
+        </div>
+
+    </div> -->
+
+    
+ </body>
+ </html>
