@@ -21,7 +21,7 @@ cssselect==0.9.1
 decorator==4.0.4
 defer==1.0.4
 django-crispy-forms==1.5.2
-django-datatable==0.1.4
+django-datatable==0.1.5
 django-filter==0.12.0
 django-filters==0.2.1
 django-registration-redux==1.2
