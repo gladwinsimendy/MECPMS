@@ -38,6 +38,7 @@
     </div>
   </nav>
   <br></br>
+  {% if user.is_authenticated %}
 <div class = 'row'>
 
 <div class = 'col-md-4'></div>
@@ -53,5 +54,15 @@
 </form>
 </div>
 </div>
+{% else %}
+    <div class = 'row'>
+    <div class = 'col-md-1'>
+            </div>
+    You Must Login to Continue</div>
+    <div class = 'row'><div class = 'col-md-1'>
+            </div><a href="/pclogin" class="btn btn-info btn-sm">
+          <span class="glyphicon glyphicon-log-out"></span> Log in
+        </a></div>
+    {% endif %}
 </body>
 </html>

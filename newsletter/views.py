@@ -72,10 +72,10 @@ def contact(request):
         profile.save()
         print profile.id
         return HttpResponseRedirect('/memberregister/'+request.POST['no_of_members']+'/'+str(profile.id))
-        for form in member_form:
-              member = form.save(commit=False)
-              member.group =  profile
-              member.save()
+        # for form in member_form:
+        #       member = form.save(commit=False)
+        #       member.group =  profile
+        #       member.save()
         
     return render(request,"contact.html",context)
 
@@ -133,9 +133,14 @@ def pclogin(request):
                 title='Unauthorised login'
                 context = {
                 'title':title
-                }                    
-                return render(request,"logout.html",context)
+                } 
+            else:
+                context = {'title':'Account is currently disabled'} 
 
+        else:
+            context = {'title':'Username and Password mismatch'}                  
+
+            
     return render(request,"login.html",context)
 
 def sellerlogin(request):
