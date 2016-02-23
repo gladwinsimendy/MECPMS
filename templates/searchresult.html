@@ -1,21 +1,41 @@
 {% load staticfiles %}
 <html>
 <head>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css'%}" media="screen,projection"/>
+<script src="{% static 'js/bootstrap.dataTables.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/maxcdnbootstrap.min.css' %}">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
-
-<!-- Latest compiled and minified JavaScript -->
 <script src="{% static 'js/maxcdnbootstrap.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+<script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
+<body style= "background : #eeeeee; overflow-x : hidden; padding-left:200px;">
+<script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'materialize/js/sidenav.js' %}"></script>
+<link rel="stylesheet" href="{% static 'materialize/css/pad.css'%}" media="screen,projection"/>    
+   <nav>
+    <div class="nav-wrapper red darken-2">
+      &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">PMS</font></a>
+      <style type="text/css">#abc:hover{text-decoration: none}</style>
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/logout" style="text-decoration:none"><font size="4">Logout</font></a></li>
+      </ul>
+      <ul id="slide-out" class="side-nav fixed">
+      <br></br>
+      <li><a class="waves-effect waves-light" href="#" style="text-decoration:none"><font size="5"><b>Mini Project</b></font></a></li>
+      <li><a class="waves-effect waves-light" href="#" style="text-decoration:none"><font size="5"><b>Major Project</b></font></a></li>
+    </ul>
+    </div>
+  </nav>
+<br></br>
 <div class = 'row'>
-<div class = 'col-md-1'></div>
-<div class = 'col-md-10'>
-<h2>Project Title : {{title}}</h2></div>
-<div class = 'col-md-1'></div>
+<div class = 'col-md-12'>
+<h2>&nbsp Project Title : {{title}}</h2>
 </div>
-<body>
+</div>
+
 <div class = 'row'>
 <div class = 'col-md-6'>
 <div class="container">
@@ -41,7 +61,10 @@
   </table>
 </div>
 </div>
-<div class = 'col-md-6'>
+</div>
+<hr>
+
+<!-- <div class = 'col-md-6'>
 <div class="container">
   <h2>Main Poject Group Details</h2>          
   <table class="table">
@@ -65,7 +88,7 @@
   </table>
 </div>
 </div>
-</div>
+</div> -->
 
 <div class = 'row'>
 <div class = 'col-md-6'>
@@ -92,7 +115,7 @@
 </div>
 </div>
 
-<div class = 'col-md-6'>
+<!-- <div class = 'col-md-6'>
 <div class="container">
   <h2>Project Docs</h2>          
   <table class="table">
@@ -114,7 +137,7 @@
     </tbody>
   </table>
 </div>
-</div>
+</div> -->
 </div>
 </body>
 </html>

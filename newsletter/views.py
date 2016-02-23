@@ -323,12 +323,12 @@ def pcview(request):
                 s = student_details.objects.filter(group=e.group.id)
                 return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
 
-        for each in main:
-            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
-            for e in s:
-                d1 = Document.objects.filter(gpno = e.group.id)
-                s1 = student_details.objects.filter(group=e.group.id)
-                return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
+        # for each in main:
+        #     s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+        #     for e in s:
+        #         d1 = Document.objects.filter(gpno = e.group.id)
+        #         s1 = student_details.objects.filter(group=e.group.id)
+        #         return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
         	# else:
         	# 	return render(request,"error.html",{'title':'Not a valid combination'})
 

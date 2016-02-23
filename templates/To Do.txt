@@ -1,4 +1,2 @@
 navbar-pcview(Mini,Major),  
 top navbar-loggedin(config)
-
-username contact submit button stores username data on click
