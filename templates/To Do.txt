@@ -1,0 +1,2 @@
+navbar-pcview(Mini,Major),  
+top navbar-loggedin(config)
