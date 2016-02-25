@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render
-from .forms import SignUpForm ,approvalForm, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
+from .forms import SignUpForm ,approvalForm,editform, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
 from .models import sellerprofile,notifications,student_details,Document
 from django_tables2   import RequestConfig
 from django.forms import formset_factory
@@ -308,6 +308,7 @@ def delete(request,num):
     return HttpResponseRedirect('/login/'+name.seller.username+'/')
 
 def pcview(request):
+    # print num
     form = pcForm(request.POST or None)
     title = 'Placement Cell'
     context={
@@ -319,7 +320,7 @@ def pcview(request):
         p_type = form.cleaned_data.get("p_type")
         print p_type
         rollno = form.cleaned_data.get("roll_no")
-        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI'))
+        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type))
         main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
         for each in mini:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
@@ -328,12 +329,12 @@ def pcview(request):
                 s = student_details.objects.filter(group=e.group.id)
                 return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
 
-        # for each in main:
-        #     s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
-        #     for e in s:
-        #         d1 = Document.objects.filter(gpno = e.group.id)
-        #         s1 = student_details.objects.filter(group=e.group.id)
-        #         return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
+        for each in main:
+            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+            for e in s:
+                d1 = Document.objects.filter(gpno = e.group.id)
+                s1 = student_details.objects.filter(group=e.group.id)
+                return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
         	# else:
         	# 	return render(request,"error.html",{'title':'Not a valid combination'})
 
@@ -344,6 +345,42 @@ def pcview(request):
         # s = student_details.objects.all()
 
     return render(request,"placement.html",context)
+
+
+
+def config(request,username):
+    print username
+    user=User.objects.get(username=username)
+    p = sellerprofile.objects.get(id = user.sellerprofile.id)
+    print p.project_title
+    s = student_details.objects.filter(group=p)
+    for each in s:
+        print each.id
+    return render(request,"config.html",{'s':s})
+
+def edit(request,username,num):
+    print username,num
+    
+    # p = sellerprofile.objects.get(id = num)
+    s = student_details.objects.get(id=num)
+    if request.method == 'POST':
+        form = editform(request.POST ,initial={'name': s.name,'rollno':s.rollno,'email':s.email})
+    else:
+        form = editform(initial={'name': s.name,'rollno':s.rollno,'email':s.email})
+
+    if form.is_valid():
+        name = form.cleaned_data.get("name")
+        rollno = form.cleaned_data.get("rollno")
+        email = form.cleaned_data.get("email")
+        s.name = name
+        s.rollno = rollno
+        s.email = email
+        s.save()
+        messages.success(request, 'Changes Updated successfully.')
+        return HttpResponseRedirect('/login/'+username+'/config')
+
+    return render(request,"edit.html",{'form':form})
+
 
 
 

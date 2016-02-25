@@ -11,13 +11,14 @@
 <link rel="stylesheet" href="{% static 'css/maxcdnbootstrap.min.css' %}">
 <script src="{% static 'js/maxcdnbootstrap.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+<meta name="viewport" content="width=device-width, initial-scale=0.5"/>
 <title>PMS - {{ request.user }}</title>
 </head>
 
 <body style= "background : #eeeeee; overflow-x : hidden">
       <script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
-
+      <script type="text/javascript" src="{% static 'materialize/js/sidenav.js' %}"></script>
       <style>
 .success{
   background:green;
@@ -30,9 +31,14 @@
     <div class="nav-wrapper blue darken-4">
       &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">Welcome {{ request.user }}</font></a>
       <style type="text/css">#abc:hover{text-decoration: none}</style>
-      <a href="/logout" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">fast_rewind</i></a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/login/{{request.user}}/config" style="text-decoration:none; color:white"><font size="4">Edit Profile</font></a></li>
         <li><a href="/logout" style="text-decoration:none; color:white"><font size="4">Logout</font></a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="/login/{{request.user}}/config" style="text-decoration:none;"><font size="4">Edit Profile</font></a></li>
+        <li><a href="/logout" style="text-decoration:none;"><font size="4">Logout</font></a></li>
       </ul>
     </div>
   </nav>

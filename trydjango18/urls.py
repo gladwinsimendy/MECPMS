@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^pclogin/pcview/$', 'newsletter.views.pcview', name='pcview'),
     url(r'^login/admin/\w+/(?P<num>[0-9]*)/$', 'newsletter.views.notify'),
     url(r'^login/(?P<username>\w+)/$', 'newsletter.views.userpage'),
+    url(r'^login/(?P<username>\w+)/(?P<num>[0-9]*)/$', 'newsletter.views.edit'),
+    url(r'^login/(?P<username>\w+)/config$', 'newsletter.views.config'),
     url(r'^login/(?P<username>\w+)/logout/$', 'newsletter.views.logout'),
     url(r'^login/admin/(?P<username>\w+)/$', 'newsletter.views.adminpage'),
     url(r'^search/$', 'newsletter.views.search', name='search'),
