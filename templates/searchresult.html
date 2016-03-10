@@ -24,18 +24,8 @@
       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
         <li><a href="/logout" style="text-decoration:none; color:white"><font size="4">Logout</font></a></li>
       </ul>
+    </nav>
 
-   <!--  <ul class="side-nav" id="mobile-demo">
-        <li><a href="/" style="text-decoration:none"><font size="4">Home</font></a></li>
-        <li><a href = "searchresult" class="waves-effect waves-light" href="#" style="text-decoration:none;"><font size="5"><b>Mini Project</b></font></a></li>
-      <li><a class="waves-effect waves-light" href="" style="text-decoration:none;"><font size="5"><b>Main Project</b></font></a></li>
-      </ul> -->
-      <!-- <ul id="slide-out" class="side-nav fixed blue lighten-1">
-      <br></br> 
-      <li class = "active"><a class="waves-effect waves-light" href="#mini"  data-toggle="tab" style="text-decoration:none; color:white"><font size="5"><b>Mini Project</b></font></a></li>
-      <li><a class="waves-effect waves-light" href="#main"  data-toggle="tab" style="text-decoration:none; color:white"><font size="5"><b>Main Project</b></font></a></li>
-    </ul> -->
-    </nav> 
 <br></br>
 <div class = 'row'>
 <div class = 'col-md-12'>
@@ -73,7 +63,7 @@
 
 
 
-<div class = 'row'>
+<!-- <div class = 'row'>
 <div class = 'col-md-6'>
 <div class="container">
   <h2>Project Docs</h2>          
@@ -96,19 +86,19 @@
     </tbody>
   </table>
 </div>
-</div>
+</div> -->
 
 
 </div>
 </div>
 <ul class="collapsible popout" data-collapsible="accordion">
     <li>
-      <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+      <div class="collapsible-header"><i class="large material-icons" style="font-size: 30px">toc</i><font size="5">&nbsp Main Project</font></div>
       <div class="collapsible-body">
       <div class = "row">
 <div class = 'col-md-6'>
 <div class="container">
-  <h2>Main Poject Group Details</h2>          
+  <h2>Main Poject Details</h2>          
   <table class="table">
     <thead>
       <tr>
@@ -132,7 +122,7 @@
 </div>
 
 
-<div class = 'col-md-6'>
+<div class = 'col-md-7'>
 <div class="container">
   <h2>Project Docs</h2>          
   <table class="table">
@@ -159,71 +149,10 @@
       </div>
     </li>
     <li>
-      <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-      <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+      <div class="collapsible-header"><i class="large material-icons" style="font-size: 30px">toc</i><font size="5">&nbsp Mini Project</font></div>
       <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
     </li>
   </ul>
-
-
-<div class="tab-pane" id="main">
-
-<div class = "row">
-<div class = 'col-md-6'>
-<div class="container">
-  <h2>Main Poject Group Details</h2>          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Roll no</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-    {%for l in s1%}
-      <tr>
-      
-        <td>{{l.name}}</td>
-        <td>{{l.rollno}}</td>
-        <td>{{l.email}}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
-</div>
-
-
-<div class = 'col-md-6'>
-<div class="container">
-  <h2>Project Docs</h2>          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Document Title</th>
-        <th>Document Url</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-    {%for l in d1%}
-      <tr>
-        <td>{{ l.doc_title }}</td>
-        <td><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></td>
-        <td>{{ l.time_stamp }}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-
-</div>
 
 
 </div>
