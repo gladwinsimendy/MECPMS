@@ -24,6 +24,15 @@
       <script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/sidenav.js' %}"></script>
+
+
+<style>
+.warning{
+  background:red;
+  text-align:center;
+}
+</style>
+
 <nav>
     <div class="nav-wrapper blue darken-4">
       &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">PC View</font></a>
@@ -37,9 +46,19 @@
       </ul>
     </div>
   </nav>
-  <br></br>
+  <!-- <br></br>
+ -->
   {% if user.is_authenticated %}
-<div class = 'row'>
+  {% if messages %}
+<div class="row">
+<div class="col-xs-12">
+    {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+<div class = 'row' style="margin-top : 20px;">
 
 <div class = 'col-md-4'></div>
 

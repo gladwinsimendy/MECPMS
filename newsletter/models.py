@@ -31,11 +31,13 @@ class sellerprofile(models.Model):
     	('YES','YES'),
     	('NO' , 'NO'),
     )
-    seller = models.OneToOneField(User,on_delete=models.CASCADE,)
+    seller = models.OneToOneField(User)
     project_title = models.CharField(max_length = 200,blank = True , null = True)
     batch = models.CharField(max_length = 200,choices = BATCH_CHOICES,blank = True , null = True)
     ptype = models.CharField(max_length = 200,choices = PROJECT_TYPE,blank = True , null = True)
-    approved = models.CharField(max_length = 10,choices =TOPIC_APPROVED,default = 'NO')
+    approved = models.CharField(max_length = 10,choices =TOPIC_APPROVED)
+    
+    
     
     def __str__(self):
 		return self.seller.username

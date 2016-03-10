@@ -119,3 +119,6 @@ class editform(forms.ModelForm):
     class Meta:
         model = student_details
         fields = ['name','rollno','email']
+
+class FormsetForm(forms.Form):
+    delete= forms.BooleanField(required=False, initial=False)

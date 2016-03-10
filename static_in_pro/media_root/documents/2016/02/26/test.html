@@ -1,0 +1,11 @@
+<script>
+function getLinkToFile() {
+  var e = document.getElementsByName('GetLink_textField')[0];
+  var val = parseInt(e.value)+1;
+  alert(val)
+  // Do the rest here
+}
+</script>
+
+<INPUT TYPE="text" NAME="GetLink_textField" VALUE="Geben Sie den Dateipfad an!" SIZE=50>
+<INPUT TYPE="button" NAME="GetLink_button" VALUE="Get link" onClick="getLinkToFile()">

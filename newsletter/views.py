@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render
-from .forms import SignUpForm ,approvalForm,editform, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
+from .forms import SignUpForm ,approvalForm,FormsetForm,editform, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
 from .models import sellerprofile,notifications,student_details,Document
 from django_tables2   import RequestConfig
 from django.forms import formset_factory
@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.template.loader import get_template
 from django.contrib import messages
 
 
@@ -28,7 +29,7 @@ def home(request):
     	s_class = form.cleaned_data.get("batch")
         p_type = form.cleaned_data.get("p_type")
         p_title = form.cleaned_data.get("p_title")
-        s=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type)&Q(project_title__contains=p_title))
+        s=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type)&Q(project_title__contains=p_title)&Q(approved = "YES"))
         for each in s:
             l=[]
             print each.id
@@ -44,7 +45,7 @@ def searchpage(request,num):
 	d = Document.objects.filter(Q(gpno = num)&Q(doc_title__contains='abstract'))
 	p=sellerprofile.objects.get(id=num)
 	s = student_details.objects.filter(group = p)
-	return render(request,"searchresult.html",{'d':d,'s':s,'title':p.project_title})
+	return render(request,"commonresult.html",{'d':d,'s':s,'title':p.project_title})
 		
     
 
@@ -78,6 +79,10 @@ def contact(request):
         #       member.save()
         
     return render(request,"contact.html",context)
+
+
+
+
 
 def memberregister(request,num,num1):
     memberFormSet = formset_factory(memberProfileForm, extra=int(num))
@@ -116,7 +121,7 @@ def myview(request):
 
 def pclogin(request):
     login_form = loginForm(request.POST or None)
-    title='Login'
+    title='PCLogin'
     context = {
      'form':login_form,
      'title':title
@@ -138,7 +143,9 @@ def pclogin(request):
                 context = {'title':'Account is currently disabled'} 
 
         else:
-            context = {'title':'Username and Password mismatch'}                  
+            messages.warning(request, 'Username and Password mismatch')
+            context = {'form':login_form,'title':title}
+                           
 
             
     return render(request,"login.html",context)
@@ -179,7 +186,8 @@ def sellerlogin(request):
         	    context = {'title':'Account is currently disabled'}
 
         else:
-            context = {'title':'Username and Password mismatch'}
+            messages.warning(request, 'Username and Password mismatch')
+            context = {'form':login_form,'title':title}
 
     return render(request,"login.html",context)
 
@@ -192,8 +200,13 @@ def loggout(request):
 def notify(request,num):
     details=[]
     form = NotificationForm(request.POST or None)
-    appform = approvalForm(request.POST or None)
     p=sellerprofile.objects.get(id = num)
+    print p.approved
+    if request.method == 'POST':
+        appform = approvalForm(request.POST,initial={'approved': p.approved})
+    else:
+        appform = approvalForm(initial={'approved': p.approved})
+    # p=sellerprofile.objects.get(id = num)
     print p.seller.username
     d = Document.objects.filter(gpno = num)
     try:
@@ -309,6 +322,7 @@ def delete(request,num):
 
 def pcview(request):
     # print num
+    f=0
     form = pcForm(request.POST or None)
     title = 'Placement Cell'
     context={
@@ -324,10 +338,16 @@ def pcview(request):
         main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
         for each in mini:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+            if len(s) == 1:
+                f = 1
             for e in s:
                 d = Document.objects.filter(gpno = e.group.id)
                 s = student_details.objects.filter(group=e.group.id)
                 return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
+        if f==0:
+            messages.warning(request, 'Not a valid combination')
+
+            
 
         for each in main:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))

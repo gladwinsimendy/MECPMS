@@ -43,8 +43,8 @@
       <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/sidenav.js' %}"></script>  
 <style>
-.success{
-  background:green;
+.warning{
+  background:red;
 }
 </style>
 <!-- <div class = 'row'> -->
@@ -62,7 +62,7 @@
 </div> -->
 <nav>
     <div class="nav-wrapper blue darken-4">
-      &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">Login</font></a>
+      &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">{{title}}</font></a>
       <style type="text/css">#abc:hover{text-decoration: none}</style>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
