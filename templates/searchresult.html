@@ -19,10 +19,10 @@
       <style type="text/css">#abc:hover{text-decoration: none}</style>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/" style="text-decoration:none; color:white"><font size="4">Home</font></a></li>
+        <li><a href="javascript:history.back()" style="text-decoration:none; color:white"><font size="4">Back</font></a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
-        <li><a href="/" style="text-decoration:none;"><font size="4">Home</font></a></li>
+        <li><a href="javascript:history.back()" style="text-decoration:none;"><font size="4">Back</font></a></li>
       </ul>
     </div>
   </nav>
@@ -34,7 +34,7 @@
 </div>
 </div>
 
-<div class = 'row'>
+<!-- <div class = 'row'>
 <div class = 'col-md-6'>
 <div class="container">
   <h2>Group Details</h2>          
@@ -59,7 +59,7 @@
   </table>
 </div>
 </div>
-</div>
+</div> -->
 <hr>
 
 
@@ -94,6 +94,63 @@
 </div>
 <ul class="collapsible popout" data-collapsible="accordion">
     <li>
+      <div class="collapsible-header"><i class="large material-icons" style="font-size: 30px">toc</i><font size="5">&nbsp Mini Project</font></div>
+      <div class="collapsible-body">
+      <div class = "row">
+<div class = 'col-md-6'>
+<div class="container">
+  <h2>Mini Poject Details</h2>          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll no</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in s%}
+      <tr>
+      
+        <td>{{l.name}}</td>
+        <td>{{l.rollno}}</td>
+        <td>{{l.email}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+
+<div class = "row">
+<div class = 'col-md-6'>
+<div class="container">
+  <h2>Project Docs</h2>          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Document Title</th>
+        <th>Document Url</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for l in d%}
+      <tr>
+        <td>{{ l.doc_title }}</td>
+        <td><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></td>
+        <td>{{ l.time_stamp }}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+</div>
+</div>  
+      
+    </li>
+    <li>
       <div class="collapsible-header"><i class="large material-icons" style="font-size: 30px">toc</i><font size="5">&nbsp Main Project</font></div>
       <div class="collapsible-body">
       <div class = "row">
@@ -121,9 +178,10 @@
   </table>
 </div>
 </div>
+</div>
 
-
-<div class = 'col-md-7'>
+<div class = "row">
+<div class = 'col-md-6'>
 <div class="container">
   <h2>Project Docs</h2>          
   <table class="table">
@@ -148,10 +206,6 @@
 </div>
 </div>  
       </div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="large material-icons" style="font-size: 30px">toc</i><font size="5">&nbsp Mini Project</font></div>
-      <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
     </li>
   </ul>
 

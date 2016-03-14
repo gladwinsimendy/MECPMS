@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^pclogin/$', 'newsletter.views.pclogin', name='pclogin'),
     url(r'^pclogin/pcview/$', 'newsletter.views.pcview', name='pcview'),
     url(r'^login/admin/\w+/(?P<num>[0-9]*)/$', 'newsletter.views.notify'),
-    # url(r'^login/admin/\w+/(?P<num>[0-9]*)/Results/$', 'newsletter.views.results'),
+    url(r'^login/admin/\w+/(?P<num>[0-9]*)/results/$', 'newsletter.views.project_marks'),
     url(r'^login/(?P<username>\w+)/$', 'newsletter.views.userpage'),
     url(r'^login/(?P<username>\w+)/(?P<num>[0-9]*)/$', 'newsletter.views.edit'),
     url(r'^login/(?P<username>\w+)/config$', 'newsletter.views.config'),

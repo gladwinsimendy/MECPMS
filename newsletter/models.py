@@ -35,7 +35,7 @@ class sellerprofile(models.Model):
     project_title = models.CharField(max_length = 200,blank = True , null = True)
     batch = models.CharField(max_length = 200,choices = BATCH_CHOICES,blank = True , null = True)
     ptype = models.CharField(max_length = 200,choices = PROJECT_TYPE,blank = True , null = True)
-    approved = models.CharField(max_length = 10,choices =TOPIC_APPROVED)
+    approved = models.CharField(max_length = 10,choices = TOPIC_APPROVED)
     
     
     
@@ -43,12 +43,14 @@ class sellerprofile(models.Model):
 		return self.seller.username
 
 class student_details(models.Model):
-	name = models.CharField(max_length = 200)
-	rollno = models.IntegerField()
-	email = models.EmailField(blank = False)
-	group = models.ForeignKey(sellerprofile,related_name = 'member')
-	#marks_obtained = models.IntegerField()
-
+    name = models.CharField(max_length = 200)
+    rollno = models.IntegerField()
+    email = models.EmailField(blank = False)
+    group = models.ForeignKey(sellerprofile,related_name = 'member')
+    marks_obtained = models.IntegerField(null = True)
+    
+    
+    
 class notifications(models.Model):
     BATCH_CHOICES = (
         ('CSA', 'CSA'),

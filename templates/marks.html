@@ -20,11 +20,11 @@
       <style type="text/css">#abc:hover{text-decoration: none}</style>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/login/{{request.user}}" style="text-decoration:none; color:white"><font size="4">Back</font></a></li>
+        <li><a href="/login/admin/{{request.user}}" style="text-decoration:none; color:white"><font size="4">Back</font></a></li>
         <li><a href="/logout" style="text-decoration:none; color:white"><font size="4">Logout</font></a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
-        <li><a href="/login/{{request.user}}" style="text-decoration:none;"><font size="4">Back</font></a></li>
+        <li><a href="/login/admin/{{request.user}}" style="text-decoration:none;"><font size="4">Back</font></a></li>
         <li><a href="/logout" style="text-decoration:none;"><font size="4">Logout</font></a></li>
       </ul>
     </div>
@@ -44,15 +44,13 @@
 
 <div class="col-md-2"></div>
 <div class="col-md-8">
-<div class="card-panel">
+<form method = "GET">
 <table class="table table-hover">
     <thead>
       <tr>
         <th>Name</th>
         <th>Rollno</th>
-        <th>Email</th>
-        <th>Group</th>
-        <th>Edit</th>
+        <th>Marks</th>
       </tr>
     </thead>
     <tbody>
@@ -61,15 +59,17 @@
       
         <td>{{l.name}}</td>
         <td>{{l.rollno}}</td>
-        <td>{{l.email}}</td>
-        <td>{{l.group}}</td>
-        <td><a href="{{l.id}}">change</a></td>
+        <td><input name ="{{l.id}}" value = {{l.marks_obtained}} type="text"></td>
       </tr>
       {%endfor%}
+      <tr>
+      <td><input type = "submit"></td>
+      </tr>
     </tbody>
   </table>
+  </form>
   </div>
-  </div>
+  <div class="col-md-2"></div>
   </div>
   {% endif %}
   </body>

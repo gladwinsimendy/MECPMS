@@ -1,2 +1,3 @@
-navbar-pcview(Mini,Major),  
-top navbar-loggedin(config)
+Main Project and Mini Project classification in pc front page should be removed.
+Both projects of same roll no should be shown in pc searchresult.
+cshod cannot see mini and main together

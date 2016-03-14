@@ -36,8 +36,55 @@ class sellerProfileForm(forms.ModelForm):
 
 class memberProfileForm(forms.ModelForm):
     class Meta:
-	    model = student_details
-	    fields=['name','rollno','email']
+        model = student_details
+        fields=['name','rollno','email']
+
+
+    # def __init__(self, *args, **kwargs):
+    #   self.user = kwargs.pop('user')  # cache the user object you pass in
+    #   super(memberProfileForm, self).__init__(*args, **kwargs)
+    #   print self.user
+        
+
+    
+
+
+    # def clean(self):
+    #     print self.num1
+    #     cleaned_data = self.cleaned_data
+    #     try:
+    #         student_details.objects.get(rollno=cleaned_data['rollno'])
+    #     except student_details.DoesNotExist:
+    #         pass
+    #     else:
+    #         raise ValidationError('This combination already exists')
+
+    #     # Always return cleaned_data
+    #     return cleaned_data
+    # def clean_rollno(self):
+    #     rno = []
+    #     rollno = self.cleaned_data.get("rollno")
+    #     print str(rollno)+"test"
+    #     p=sellerprofile.objects.all()
+    #     # for each in p:
+    #     #     a=each.member.all()
+    #     #     for each in a:
+    #     #         print each.batch
+    #         # for e in each.member:
+    #         #     print e.rollno
+    #     s=student_details.objects.all()
+    #     # for each in s:
+    #     #     g=each.group.member.all()
+    #     #     for each in g:
+    #     #         print each.batch
+    #     for each in s:
+    #         rno.append(each.rollno)
+    #     print rno
+    #     return rollno
+
+
+        
+
     
 
 class loginForm(forms.Form):
@@ -58,22 +105,6 @@ class DocumentForm(forms.Form):
         label='Select a file',
         help_text='max. 42 megabytes'
     )
-
-class MyForm(forms.Form):
-    original_field = forms.CharField()
-    extra_field_count = forms.CharField(widget=forms.HiddenInput())
-
-    def __init__(self, *args, **kwargs):
-        extra_fields = kwargs.pop('extra', 3)
-
-        super(MyForm, self).__init__(*args, **kwargs)
-        self.fields['extra_field_count'].initial = extra_fields
-
-        for index in range(int(extra_fields)):
-            # generate extra fields in the number specified via extra_fields
-            self.fields['extra_field_{index}'.format(index=index)] = \
-                forms.CharField()
-
 
  
 class pcForm(forms.Form):
@@ -106,9 +137,9 @@ class searchForm(forms.Form):
         ('MINI','MINIPROJECT'),
         ('MAIN','MAINPROJECT'),
     )
-    batch= forms.ChoiceField(choices = BATCH_CHOICES)
-    p_type = forms.ChoiceField(choices = PROJECT_TYPE)
     p_title = forms.CharField(max_length = 30,required = False)
+    batch= forms.ChoiceField(widget=forms.Select(attrs={'onchange': 'this.form.submit();'}),choices = BATCH_CHOICES)
+    p_type = forms.ChoiceField(widget=forms.Select(attrs={'onchange': 'this.form.submit();'}),choices = PROJECT_TYPE)
 
 class approvalForm(forms.ModelForm):
     class Meta:

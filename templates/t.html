@@ -1,0 +1,46 @@
+class Meta:
+        unique_together = (("rollno", "batch"))
+
+
+
+
+
+
+        def memberregister(request,num,num1):
+    
+    # ,initial={'batch': profile.batch}
+    profile = sellerprofile.objects.get(id = num1)
+    print profile.batch
+    memberFormSet = formset_factory(memberProfileForm, extra=0)
+    
+    member_form = memberFormSet(request.POST or None , initial=[{'batch': profile.batch} for i in range(int(num))])
+        
+     # for i in range(int(num))
+     # , extra=int(num)
+     # initial=[{'batch': profile.batch}]
+    # member_form = memberFormSet(initial=[{'batch': profile.batch} for i in range(int(num))])
+        
+    title = "Add Members"
+    context = {
+      'memberform':member_form,
+      'title':title
+      }
+
+    if member_form.is_valid():
+        # p = sellerprofile.objects.filter(batch = profile.batch)
+        for form in member_form:
+            member = form.save(commit=False)
+            member.group =  profile
+            member.batch = profile.batch
+
+
+            member.save()
+
+            
+
+        
+        messages.success(request, 'Profile details updated.')
+        title = "Your Response Has been Recorded" 
+        return HttpResponseRedirect('/login/')
+        # return render(request,"memberregister.html",{'messages':messages})
+    return render(request,"memberregister.html",context) 

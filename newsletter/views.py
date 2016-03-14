@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render
-from .forms import SignUpForm ,approvalForm,FormsetForm,editform, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,MyForm,DocumentForm,pcForm
+from .forms import SignUpForm ,approvalForm,FormsetForm,editform, UserForm,searchForm,approvalForm, sellerProfileForm,loginForm,NotificationForm,memberProfileForm,DocumentForm,pcForm
 from .models import sellerprofile,notifications,student_details,Document
 from django_tables2   import RequestConfig
 from django.forms import formset_factory
@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.template.loader import get_template
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -54,6 +55,10 @@ def searchpage(request,num):
 def contact(request):
     registered = False
     title = 'welcome'
+    profile = student_details.objects.filter(group__pk=15)
+    print profile
+    for each in profile:
+        print each.group.id
     user_form = UserForm(request.POST or None)
     profile_form = sellerProfileForm(request.POST or None)
     
@@ -85,19 +90,35 @@ def contact(request):
 
 
 def memberregister(request,num,num1):
+    
+    # ,initial={'batch': profile.batch}
+    profile = sellerprofile.objects.get(id = num1)
+    print profile.batch
     memberFormSet = formset_factory(memberProfileForm, extra=int(num))
+    
     member_form = memberFormSet(request.POST or None)
+        
+     # for i in range(int(num))
+     # , extra=int(num)
+     # initial=[{'batch': profile.batch}]
+    # member_form = memberFormSet(initial=[{'batch': profile.batch} for i in range(int(num))])
+        
     title = "Add Members"
     context = {
       'memberform':member_form,
       'title':title
       }
+
     if member_form.is_valid():
-        profile = sellerprofile.objects.get(id = num1)
+        # p = sellerprofile.objects.filter(batch = profile.batch)
         for form in member_form:
             member = form.save(commit=False)
             member.group =  profile
             member.save()
+
+            
+
+        
         messages.success(request, 'Profile details updated.')
         title = "Your Response Has been Recorded" 
         return HttpResponseRedirect('/login/')
@@ -332,9 +353,9 @@ def pcview(request):
     if form.is_valid():
         s_class = form.cleaned_data.get("batch")
         p_type = form.cleaned_data.get("p_type")
-        print p_type
+        
         rollno = form.cleaned_data.get("roll_no")
-        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type))
+        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI'))
         main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
         for each in mini:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
@@ -344,17 +365,20 @@ def pcview(request):
                 d = Document.objects.filter(gpno = e.group.id)
                 s = student_details.objects.filter(group=e.group.id)
                 return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
-        if f==0:
-            messages.warning(request, 'Not a valid combination')
 
             
 
         for each in main:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+            if len(s) == 1:
+                f = 1
             for e in s:
                 d1 = Document.objects.filter(gpno = e.group.id)
                 s1 = student_details.objects.filter(group=e.group.id)
                 return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
+
+        if f==0:
+            messages.warning(request, 'Not a valid combination')
         	# else:
         	# 	return render(request,"error.html",{'title':'Not a valid combination'})
 
@@ -400,6 +424,30 @@ def edit(request,username,num):
         return HttpResponseRedirect('/login/'+username+'/config')
 
     return render(request,"edit.html",{'form':form})
+
+
+def project_marks(request,num):
+    details = []
+            # s.marks_obtained = requ
+    if request.method == 'GET':
+        for key in request.GET:
+            print int(key)
+            s = student_details.objects.get(id = key)
+            print request.GET[key]
+            s.marks_obtained = request.GET[key]
+            s.save()
+            messages.success(request, 'Marks successfully updated.')
+            return HttpResponseRedirect('../')
+    p=sellerprofile.objects.get(id = num)
+    try:
+     s = student_details.objects.filter(group=p)
+    except student_details.DoesNotExist:
+     s = None
+
+    return render(request,"marks.html",{'s':s})
+
+
+
 
 
 

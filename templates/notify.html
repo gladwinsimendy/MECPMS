@@ -2,6 +2,7 @@
 {% load staticfiles %}
 <html>
 <head>
+<title>PMS - User Actions</title>
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css'%}" media="screen,projection"/>
 <link rel="stylesheet" href="{% static 'css/maxcdnbootstrap.min.css' %}">
@@ -28,6 +29,7 @@
       &nbsp;&nbsp;&nbsp;<a id="abc" href="#" class="brand-logo" ><font size="6">User Actions</font></a>
       <style type="text/css">#abc:hover{text-decoration: none}</style>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="results" style="text-decoration:none; color:white"><font size="4">Marks</font></a></li>
         <li><a href="/login/admin/{{ request.user }}" style="text-decoration:none; color:white"><font size="4">Go Back</font></a></li>
       </ul>
     </div>
@@ -36,7 +38,21 @@
 .alert{
   display:none;
 }
+
+.success{
+  background:green;
+}
+
 </style>
+{% if messages %}
+<div class="row">
+<div class="col-xs-12">
+    {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
 <div class = 'row'>
 <div class = 'col-md-1'>
 </div>
