@@ -69,12 +69,12 @@ function getLinkToFile() {
 </script>
 
 
-<div class="row" style="margin-top : 30px;">
 <div class = 'row'>
 <!-- <div class = "col-md-4">hai</div> -->
 <div class = 'col-md-4'></div>
 
 <div class = 'col-md-4'>
+<div class="card-panel">  
 <form method = "POST">
 {% csrf_token%}
 {{profileform|crispy}}
@@ -91,8 +91,7 @@ function getLinkToFile() {
 </div>
 </form>
 <br></br>
-<!-- <input type = "submit" value = "submit"> -->
-
+</div>
 </div>
 </div>
 </body>

@@ -28,66 +28,6 @@
   </nav>
 
 <br></br>
-<div class = 'row'>
-<div class = 'col-md-12'>
-<h2>&nbsp Project Title : {{title}}</h2>
-</div>
-</div>
-
-<!-- <div class = 'row'>
-<div class = 'col-md-6'>
-<div class="container">
-  <h2>Group Details</h2>          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Roll no</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-    {%for l in s%}
-      <tr>
-      
-        <td>{{l.name}}</td>
-        <td>{{l.rollno}}</td>
-        <td>{{l.email}}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
-</div>
-</div> -->
-<hr>
-
-
-
-<!-- <div class = 'row'>
-<div class = 'col-md-6'>
-<div class="container">
-  <h2>Project Docs</h2>          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Document Title</th>
-        <th>Document Url</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-    {%for l in d%}
-      <tr>
-        <td>{{ l.doc_title }}</td>
-        <td><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></td>
-        <td>{{ l.time_stamp }}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
-</div> -->
 
 
 </div>
@@ -99,7 +39,7 @@
       <div class = "row">
 <div class = 'col-md-6'>
 <div class="container">
-  <h2>Mini Poject Details</h2>          
+  <h2>&nbsp Project Title : {{titlemini}}</h2>         
   <table class="table">
     <thead>
       <tr>
@@ -156,7 +96,7 @@
       <div class = "row">
 <div class = 'col-md-6'>
 <div class="container">
-  <h2>Main Poject Details</h2>          
+  <h2>&nbsp Project Title : {{titlemain}}</h2>          
   <table class="table">
     <thead>
       <tr>

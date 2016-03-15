@@ -18,6 +18,7 @@
       <script type="text/javascript" src="{% static 'materialize/js/jquery-2.1.1.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'materialize/js/sidenav.js' %}"></script>
+      <script type="text/javascript" src="{% static 'materialize/js/modal.js' %}"></script>
       <style>
 .success{
   background:green;
@@ -142,8 +143,7 @@
 <div class = 'row'>
 <div class = 'col-md-1'>
 </div>
-<div class = 'col-md-12'>
-<div class="container">
+<div class = 'col-md-10'>
 {% if documents %} 
 <div class="card-panel">
   <h2>Group Details</h2>    
@@ -166,44 +166,49 @@
         </form>
       </tr>
       {%endfor%}
-      
     </tbody>
   </table>
-  </div>
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Upload Document</a>
   </div>
   </div>
   </div>
   {% endif %}
-  <br></br>
-  <div class= "row">
-    <div class = 'col-md-1'>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+    <div align="center">
+    <h3>Document Upload</h3>
     </div>
-    <div class = 'col-md-4'>
-    <div class="card-panel">
-    <h3>Doc Upload</h3>
     <hr width="75%">
+    <br>
     <form class="form-inline" role="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
              <div class="input-field">
              <input id="project title" name = "doc_title" type="text" class="validate" style="font-size:15px">
              <label for="project title"><font size="3">Project Title</font></label>
              </div>
-            <!-- <input type = "text" name = "doc_title" value = "project title" style="font-size:20px"> -->
+            <div align="center">
             <div class="form-group">
-            <p>{{ form.non_field_errors }}</p>
-            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
-            <p>
+            <br></br>
+            <p>{{ form.non_field_errors }}
+            {{ form.docfile.label_tag }} {{ form.docfile.help_text }}
+            
                 <!-- {{ form.docfile.errors }} -->
                 {{ form.docfile }}
             </p>
-            </div>
-            <div class="form-group">
             <br></br>
-            <input type="submit" value="Upload" /></div>
+            <button class="btn waves-effect waves-light" type="submit">Upload
+    <i class="material-icons right">send</i>
+  </button>
+            </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            </div>
         </form>
-        </div>
-      </div>
-</div>
+    </div>
+  </div>
+          
 {% endif %}
 
 {% else %}

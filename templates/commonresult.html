@@ -29,17 +29,15 @@
   </nav>
 
   
-<div class="tab-content">
-    <div class="tab-pane active" id="mini">
-<div class = 'row'>
-<div class = 'col-md-12'>
-<h2>&nbsp Project Title : {{title}}</h2>
-</div>
-</div>
 
 <div class = 'row'>
-<div class = 'col-md-6'>
-<div class="container">
+<div class="col-md-2"></div>
+<div class="col-md-8">
+<div class="card-panel">
+<div align="center">
+<h2>Project Title : {{title}}</h2>
+<hr width="50%"></hr>
+</div>
   <h2>Group Details</h2>          
   <table class="table">
     <thead>
@@ -68,8 +66,9 @@
 
 
 <div class = 'row'>
-<div class = 'col-md-6'>
-<div class="container">
+<div class="col-md-2"></div>
+<div class="col-md-8">
+<div class="card-panel">
   <h2>Project Docs</h2>          
   <table class="table">
     <thead>
@@ -91,66 +90,7 @@
   </table>
 </div>
 </div>
-
-
-</div>
-</div>
-<div class="tab-pane" id="main">
-
-<div class = "row">
-<div class = 'col-md-6'>
-<div class="container">
-  <h2>Main Poject Group Details</h2>          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Roll no</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-    {%for l in s1%}
-      <tr>
-      
-        <td>{{l.name}}</td>
-        <td>{{l.rollno}}</td>
-        <td>{{l.email}}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
 </div>
 
-
-<div class = 'col-md-6'>
-<div class="container">
-  <h2>Project Docs</h2>          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Document Title</th>
-        <th>Document Url</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-    {%for l in d1%}
-      <tr>
-        <td>{{ l.doc_title }}</td>
-        <td><a href="{{ l.docfile.url }}">{{ l.docfile.name}}</a></td>
-        <td>{{ l.time_stamp }}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
 </body>
 </html>

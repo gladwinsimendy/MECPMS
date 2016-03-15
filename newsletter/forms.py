@@ -103,7 +103,7 @@ class DocumentForm(forms.Form):
     # doc_title = forms.CharField(max_length = 30)
     docfile = forms.FileField(
         label='Select a file',
-        help_text='max. 42 megabytes'
+        help_text='Max. 10mb'
     )
 
  
@@ -116,16 +116,12 @@ class pcForm(forms.Form):
         ('EEE', 'EEE'),
         ('BME', 'BME'),
     )
-    PROJECT_TYPE = (
-        ('MINI','MINIPROJECT'),
-        ('MAIN','MAINPROJECT'),
-    )
     batch= forms.ChoiceField(choices = BATCH_CHOICES)
-    p_type = forms.ChoiceField(choices = PROJECT_TYPE)
     roll_no = forms.IntegerField(required = True)
 
 class searchForm(forms.Form):
     BATCH_CHOICES = (
+        ('---', '---'),
         ('CSA', 'CSA'),
         ('CSB', 'CSB'),
         ('ECA', 'ECA'),

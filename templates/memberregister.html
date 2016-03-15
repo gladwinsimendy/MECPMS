@@ -31,13 +31,13 @@
   </nav>  
  
 
-<div class="row" style="margin-top : 30px;">
 <div class = 'row'>
 <!-- <div class = "col-md-4">hai</div> -->
 <div class = 'col-md-4'></div>
 
 <div class = 'col-md-4'>
 <form method = "POST">
+<div class="card-panel">  
 {% csrf_token%}
 {{memberform|crispy}}
 <div align="center">
@@ -46,8 +46,7 @@
 </div>
 </form>
 <br></br>
-<!-- <input type = "submit" value = "submit"> -->
-
+</div>
 </div>
 </div>
 </body>

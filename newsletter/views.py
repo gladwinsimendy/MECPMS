@@ -357,28 +357,31 @@ def pcview(request):
         rollno = form.cleaned_data.get("roll_no")
         mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI'))
         main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
-        for each in mini:
-            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
-            if len(s) == 1:
-                f = 1
-            for e in s:
-                d = Document.objects.filter(gpno = e.group.id)
-                s = student_details.objects.filter(group=e.group.id)
-                return render(request,"searchresult.html",{'d':d,'s':s,'title':e.group.project_title})
-
-            
 
         for each in main:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
             if len(s) == 1:
                 f = 1
             for e in s:
+                titlemain = e.group.project_title
                 d1 = Document.objects.filter(gpno = e.group.id)
                 s1 = student_details.objects.filter(group=e.group.id)
-                return render(request,"searchresult.html",{'d1':d1,'s1':s1,'title':e.group.project_title})
 
+                
+
+        for each in mini:
+            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
+            if len(s) == 1:
+                f = 1
+            for e in s:
+                titlemini = e.group.project_title
+                d = Document.objects.filter(gpno = e.group.id)
+                s = student_details.objects.filter(group=e.group.id)
         if f==0:
-            messages.warning(request, 'Not a valid combination')
+            messages.warning(request, 'Not a valid combination')       
+
+        return render(request,"searchresult.html",{'d':d,'s':s,'titlemini':titlemini,'d1':d1,'s1':s1,'titlemain':titlemain})
+        
         	# else:
         	# 	return render(request,"error.html",{'title':'Not a valid combination'})
 
