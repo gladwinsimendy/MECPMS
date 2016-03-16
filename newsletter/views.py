@@ -27,14 +27,14 @@ def home(request):
         'details':details
     }
     if form.is_valid():
-    	s_class = form.cleaned_data.get("batch")
+        s_class = form.cleaned_data.get("batch")
         p_type = form.cleaned_data.get("p_type")
         p_title = form.cleaned_data.get("p_title")
         s=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type)&Q(project_title__contains=p_title)&Q(approved = "YES"))
         for each in s:
             l=[]
             print each.id
-            l.extend([each.seller,each.batch,each.project_title,each.ptype,each.id])	
+            l.extend([each.seller,each.batch,each.project_title,each.ptype,each.id])    
             details.append(l)
        
         return render(request,"home.html",context)
@@ -42,12 +42,12 @@ def home(request):
     return render(request,"home.html",context)
 
 def searchpage(request,num):
-	print num
-	d = Document.objects.filter(Q(gpno = num)&Q(doc_title__contains='abstract'))
-	p=sellerprofile.objects.get(id=num)
-	s = student_details.objects.filter(group = p)
-	return render(request,"commonresult.html",{'d':d,'s':s,'title':p.project_title})
-		
+    print num
+    d = Document.objects.filter(Q(gpno = num)&Q(doc_title__contains='abstract'))
+    p=sellerprofile.objects.get(id=num)
+    s = student_details.objects.filter(group = p)
+    return render(request,"commonresult.html",{'d':d,'s':s,'title':p.project_title})
+        
     
 
 
@@ -132,7 +132,7 @@ def search(request):
 
 def myview(request):
     if request.method == 'POST':
-    	print request.POST.get('extra_field_count')
+        print request.POST.get('extra_field_count')
         form = MyForm(request.POST, extra=request.POST.get('extra_field_count'))
         if form.is_valid():
             print "valid!"
@@ -200,11 +200,11 @@ def sellerlogin(request):
                 RequestConfig(request,paginate={"per_page": 25}).configure(table)
                 return render(request, "loggedin.html", {'table': table,'table1':table1})
 
-        		#print sellerprofile.seller.Username
-        		#print s.id
-        		#return render(request, "loggedin.html", {})
+                #print sellerprofile.seller.Username
+                #print s.id
+                #return render(request, "loggedin.html", {})
             else:
-        	    context = {'title':'Account is currently disabled'}
+                context = {'title':'Account is currently disabled'}
 
         else:
             messages.warning(request, 'Username and Password mismatch')
@@ -214,29 +214,29 @@ def sellerlogin(request):
 
 
 def loggout(request):
-	logout(request)
-	context = {'title':'logging you out'}
-	return HttpResponseRedirect('/')
+    logout(request)
+    context = {'title':'logging you out'}
+    return HttpResponseRedirect('/')
 
 def notify(request,num):
     details=[]
     form = NotificationForm(request.POST or None)
     p=sellerprofile.objects.get(id = num)
-    print p.approved
+    # print p.approved
     if request.method == 'POST':
         appform = approvalForm(request.POST,initial={'approved': p.approved})
     else:
         appform = approvalForm(initial={'approved': p.approved})
     # p=sellerprofile.objects.get(id = num)
-    print p.seller.username
+    # print p.seller.username
     d = Document.objects.filter(gpno = num)
     try:
      s = student_details.objects.filter(group=p)
      for sh in s:     
-     	l=[]
-        l.extend([sh.name,sh.rollno,sh.email])	
+        l=[]
+        l.extend([sh.name,sh.rollno,sh.email])  
         details.append(l)
-        print details
+        # print details
     except student_details.DoesNotExist:
      s = None
     context={
@@ -246,24 +246,24 @@ def notify(request,num):
         'documents':d
     }
     if form.is_valid() and appform.is_valid():
-    	
-    	# s=sellerprofile.objects.filter(id=num)
-    	# print s
+        
+        # s=sellerprofile.objects.filter(id=num)
+        # print s
         a = appform.cleaned_data.get("approved")
         print a
-    	instance = form.save(commit=False)
-    	instance.idno = num
+        instance = form.save(commit=False)
+        instance.idno = num
         instance.batch = p.batch
-    	instance.save()
+        instance.save()
         # app = appform.save(commit=False)
         p.approved = a
         p.save()
         # app.save()
-    	form = NotificationForm()
+        form = NotificationForm()
         messages.success(request, 'Notification successfully sent.')
         return HttpResponseRedirect('../')
         # appform = approvalForm()
-    	context={
+        context={
         'form':form,
         'appform':appform,
         'details':details,
@@ -357,37 +357,58 @@ def pcview(request):
         rollno = form.cleaned_data.get("roll_no")
         mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI'))
         main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
+        # print len(mini)
+        # print len(main)
+
 
         for each in main:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
             if len(s) == 1:
-                f = 1
-            for e in s:
-                titlemain = e.group.project_title
-                d1 = Document.objects.filter(gpno = e.group.id)
-                s1 = student_details.objects.filter(group=e.group.id)
+                f=1
+                for e in s:
+                    titlemain = e.group.project_title
+                    d1 = Document.objects.filter(gpno = e.group.id)
+                    s1 = student_details.objects.filter(group=e.group.id)
+                maincontext = {'d1':d1,'s1':s1,'titlemain':titlemain}
+
+            else:
+                maincontext = {}
+
+
 
                 
 
         for each in mini:
             s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
             if len(s) == 1:
-                f = 1
-            for e in s:
-                titlemini = e.group.project_title
-                d = Document.objects.filter(gpno = e.group.id)
-                s = student_details.objects.filter(group=e.group.id)
+                f=1
+                for e in s:
+                    titlemini = e.group.project_title
+                    d = Document.objects.filter(gpno = e.group.id)
+                    s = student_details.objects.filter(group=e.group.id)
+                minicontext = {'d':d,'s':s,'titlemini':titlemini}
+
+            else:
+               minicontext = {} 
+
+        print f
         if f==0:
-            messages.warning(request, 'Not a valid combination')       
+            messages.warning(request, 'Not a valid combination')
 
-        return render(request,"searchresult.html",{'d':d,'s':s,'titlemini':titlemini,'d1':d1,'s1':s1,'titlemain':titlemain})
+        else:
+            return render(request,"searchresult.html",dict(minicontext.items()+maincontext.items()))
         
-        	# else:
-        	# 	return render(request,"error.html",{'title':'Not a valid combination'})
+
+            
+
+        
+
+            # else:
+            #   return render(request,"error.html",{'title':'Not a valid combination'})
 
 
-        		# seller = sellerprofile.objects.filter(id = e.group)
-        		# print seller.id
+                # seller = sellerprofile.objects.filter(id = e.group)
+                # print seller.id
 
         # s = student_details.objects.all()
 
@@ -431,16 +452,18 @@ def edit(request,username,num):
 
 def project_marks(request,num):
     details = []
+    print len(request.GET)
             # s.marks_obtained = requ
-    if request.method == 'GET':
+    if len(request.GET) != 0:
         for key in request.GET:
             print int(key)
             s = student_details.objects.get(id = key)
+            print s.name
             print request.GET[key]
             s.marks_obtained = request.GET[key]
             s.save()
-            messages.success(request, 'Marks successfully updated.')
-            return HttpResponseRedirect('../')
+        messages.success(request, 'Marks successfully updated.')
+        return HttpResponseRedirect('../')
     p=sellerprofile.objects.get(id = num)
     try:
      s = student_details.objects.filter(group=p)
@@ -467,18 +490,18 @@ def project_marks(request,num):
 #     return render(request, "test.html", {'table': table})
 
 # def test(request):
-# 	title = 'welcome'
-# 	form = ContactForm(request.POST or None)
-# 	context = {
-# 	  'form':form,
-# 	  'title':title
-# 	}
-# 	if form.is_valid():
-# 		instance = form.save(commit=False)
-# 		print instance.member_names
-# 		name=instance.member_names
-# 		table= PersonTable(project.objects.filter(member_names=name))
-# 		RequestConfig(request,paginate={"per_page": 25}).configure(table)
-# 		context = {'table' : table}
-# 	return render(request,"test.html",context)
-	
+#   title = 'welcome'
+#   form = ContactForm(request.POST or None)
+#   context = {
+#     'form':form,
+#     'title':title
+#   }
+#   if form.is_valid():
+#       instance = form.save(commit=False)
+#       print instance.member_names
+#       name=instance.member_names
+#       table= PersonTable(project.objects.filter(member_names=name))
+#       RequestConfig(request,paginate={"per_page": 25}).configure(table)
+#       context = {'table' : table}
+#   return render(request,"test.html",context)
+    

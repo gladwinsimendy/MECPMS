@@ -103,7 +103,7 @@ class DocumentForm(forms.Form):
     # doc_title = forms.CharField(max_length = 30)
     docfile = forms.FileField(
         label='Select a file',
-        help_text='Max. 10mb'
+        help_text='max. 42 megabytes'
     )
 
  
