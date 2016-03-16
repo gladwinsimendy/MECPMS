@@ -186,6 +186,8 @@ def sellerlogin(request):
         if user is not None:
 
             if user.is_active:
+                if user.is_staff:
+                    return HttpResponseRedirect('/pclogin/pcview')
                 
                 login(request, user)
                 #print {{ser.username}}
@@ -200,9 +202,6 @@ def sellerlogin(request):
                 RequestConfig(request,paginate={"per_page": 25}).configure(table)
                 return render(request, "loggedin.html", {'table': table,'table1':table1})
 
-                #print sellerprofile.seller.Username
-                #print s.id
-                #return render(request, "loggedin.html", {})
             else:
                 context = {'title':'Account is currently disabled'}
 
@@ -273,7 +272,6 @@ def notify(request,num):
 
 def userpage(request,username):
     user=User.objects.get(username=username)
-    print user.sellerprofile.batch
     table= notifications.objects.filter(idno=user.sellerprofile.id).only('notification','time_stamp')
     table1 = notifications.objects.filter(Q(category='public')&Q(batch = user.sellerprofile.batch)).only('notification','time_stamp')
     if request.method == 'POST':
