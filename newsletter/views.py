@@ -272,8 +272,8 @@ def notify(request,num):
 
 def userpage(request,username):
     user=User.objects.get(username=username)
-    table= notifications.objects.filter(idno=user.sellerprofile.id).only('notification','time_stamp').order_by('-check_in')
-    table1 = notifications.objects.filter(Q(category='public')&Q(batch = user.sellerprofile.batch)).only('notification','time_stamp').order_by('-check_in')
+    table= notifications.objects.filter(idno=user.sellerprofile.id).only('notification','time_stamp').order_by('-time_stamp')
+    table1 = notifications.objects.filter(Q(category='public')&Q(batch = user.sellerprofile.batch)).only('notification','time_stamp').order_by('-time_stamp')
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
 
