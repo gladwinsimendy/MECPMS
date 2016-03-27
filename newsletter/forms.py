@@ -32,7 +32,7 @@ class UserForm(forms.ModelForm):
 class sellerProfileForm(forms.ModelForm):
     class Meta:
         model = sellerprofile
-        fields=['project_title','batch','ptype']
+        fields=['project_title','batch','batch_year','ptype']
 
 class memberProfileForm(forms.ModelForm):
     class Meta:
@@ -116,7 +116,20 @@ class pcForm(forms.Form):
         ('EEE', 'EEE'),
         ('BME', 'BME'),
     )
+    BATCH_YEAR = (
+        ('2012', '2012'),
+        ('2013', '2013'),
+        ('2014', '2014'),
+        ('2015', '2015'),
+        ('2016', '2016'),
+        ('2017', '2017'),
+        ('2018', '2018'),
+        ('2019', '2019'),
+        ('2020', '2020'),
+        ('2021', '2021'),
+    )
     batch= forms.ChoiceField(choices = BATCH_CHOICES)
+    batch_year = forms.ChoiceField(choices = BATCH_YEAR)
     roll_no = forms.IntegerField(required = True)
 
 class searchForm(forms.Form):
@@ -129,12 +142,25 @@ class searchForm(forms.Form):
         ('EEE', 'EEE'),
         ('BME', 'BME'),
     )
+    BATCH_YEAR = (
+        ('2012', '2012'),
+        ('2013', '2013'),
+        ('2014', '2014'),
+        ('2015', '2015'),
+        ('2016', '2016'),
+        ('2017', '2017'),
+        ('2018', '2018'),
+        ('2019', '2019'),
+        ('2020', '2020'),
+        ('2021', '2021'),
+    )
     PROJECT_TYPE = (
         ('MINI','MINIPROJECT'),
         ('MAIN','MAINPROJECT'),
     )
     p_title = forms.CharField(max_length = 30,required = False)
     batch= forms.ChoiceField(widget=forms.Select(attrs={'onchange': 'this.form.submit();'}),choices = BATCH_CHOICES)
+    batch_year = forms.ChoiceField(widget=forms.Select(attrs={'onchange': 'this.form.submit();'}),choices = BATCH_YEAR)
     p_type = forms.ChoiceField(widget=forms.Select(attrs={'onchange': 'this.form.submit();'}),choices = PROJECT_TYPE)
 
 class approvalForm(forms.ModelForm):

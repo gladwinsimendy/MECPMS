@@ -28,9 +28,10 @@ def home(request):
     }
     if form.is_valid():
         s_class = form.cleaned_data.get("batch")
+        s_year = form.cleaned_data.get("batch_year")
         p_type = form.cleaned_data.get("p_type")
         p_title = form.cleaned_data.get("p_title")
-        s=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = p_type)&Q(project_title__contains=p_title)&Q(approved = "YES"))
+        s=sellerprofile.objects.filter(Q(batch = s_class)&Q(batch_year = s_year)&Q(ptype = p_type)&Q(project_title__contains=p_title)&Q(approved = "YES"))
         for each in s:
             l=[]
             print each.id
@@ -46,7 +47,7 @@ def searchpage(request,num):
     d = Document.objects.filter(Q(gpno = num)&Q(doc_title__contains='abstract'))
     p=sellerprofile.objects.get(id=num)
     s = student_details.objects.filter(group = p)
-    return render(request,"commonresult.html",{'d':d,'s':s,'title':p.project_title})
+    return render(request,"commonresult.html",{'d':d,'s':s,'title':p.project_title, 'year':p.batch_year})
         
     
 
@@ -342,6 +343,8 @@ def delete(request,num):
 def pcview(request):
     # print num
     f=0
+    maincontext={}
+    minicontext={}
     form = pcForm(request.POST or None)
     title = 'Placement Cell'
     context={
@@ -350,45 +353,54 @@ def pcview(request):
     }
     if form.is_valid():
         s_class = form.cleaned_data.get("batch")
+        s_year = form.cleaned_data.get("batch_year")
         p_type = form.cleaned_data.get("p_type")
-        
         rollno = form.cleaned_data.get("roll_no")
-        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI'))
-        main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN'))
+        # print s_class,s_year,p_type,rollno
+        mini=sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MINI')&Q(batch_year = s_year))
+
+        main = sellerprofile.objects.filter(Q(batch = s_class)&Q(ptype = 'MAIN')&Q(batch_year = s_year))
         # print len(mini)
         # print len(main)
 
 
         for each in main:
-            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
-            if len(s) == 1:
+            try:
+                s = student_details.objects.get(Q(group=each) & Q(rollno = rollno))
+                print s
+            except student_details.DoesNotExist:
+                s=None
+            # print len(s)
+            if s is not None:
                 f=1
-                for e in s:
-                    titlemain = e.group.project_title
-                    d1 = Document.objects.filter(gpno = e.group.id)
-                    s1 = student_details.objects.filter(group=e.group.id)
-                maincontext = {'d1':d1,'s1':s1,'titlemain':titlemain}
+                titlemain = s.group.project_title
+                d1 = Document.objects.filter(gpno = s.group.id)
+                s1 = student_details.objects.filter(group=s.group.id)
+                maincontext = {'d1':d1,'s1':s1,'titlemain':titlemain,'year':s_year}
+                break
 
-            else:
-                maincontext = {}
 
 
 
                 
 
         for each in mini:
-            s = student_details.objects.filter(Q(group=each) & Q(rollno = rollno))
-            if len(s) == 1:
+            try:
+                s = student_details.objects.get(Q(group=each) & Q(rollno = rollno))
+                print s
+            except student_details.DoesNotExist:
+                s=None
+            # print len(s)
+            # x = student_details.objects.get(Q(group=each) & Q(rollno = rollno))
+            # print x
+            if s is not None:
                 f=1
-                for e in s:
-                    titlemini = e.group.project_title
-                    d = Document.objects.filter(gpno = e.group.id)
-                    s = student_details.objects.filter(group=e.group.id)
-                minicontext = {'d':d,'s':s,'titlemini':titlemini}
-
-            else:
-               minicontext = {} 
-
+                titlemini = s.group.project_title
+                d = Document.objects.filter(gpno = s.group.id)
+                s = student_details.objects.filter(group=s.group.id)
+                minicontext = {'d':d,'s':s,'titlemini':titlemini,'year':s_year}
+                print minicontext
+                break
         print f
         if f==0:
             messages.warning(request, 'Not a valid combination')
