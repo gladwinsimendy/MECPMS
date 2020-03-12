@@ -40,7 +40,7 @@ pause==0.1.2
 pexpect==3.1
 pickleDB==0.4
 piston-mini-client==0.7.5
-psutil==3.2.1
+psutil==5.6.6
 psycopg2==2.4.5
 pyOpenSSL==0.13
 pyasn1==0.1.7
