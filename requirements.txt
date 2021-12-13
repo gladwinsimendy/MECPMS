@@ -33,7 +33,7 @@ html5lib==1.0b8
 httplib2==0.8
 itsdangerous==0.24
 lockfile==0.8
-lxml==3.3.3
+lxml==4.6.5
 nltk==3.0.5
 oauthlib==0.6.1
 pause==0.1.2
